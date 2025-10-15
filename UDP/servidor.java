@@ -1,42 +1,27 @@
-package UDP;
-
-import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.DatagramPacket;
+//Vamos a usar hilos para esta activdad y el metodo UDP
+public class servidor{
+  public static void main(String[] args){
+    int puerto = 4000; //definimos el puerto estatico (el sevidor no puede cambiar de puerto)
+    //crear el socket UDP
+    try {
+      DatagramSocket socket = new DatagramSocket(puerto); //DatagramSocket es una clase interna de Java
+      System.out.println("Esperando conexiones...");
+      while (true) { 
+          //Arreglo de bytes para recibir datos (donde recibimos los datos del cliente)
+          byte[] bufferEntrada = new byte[1024]; //debemos establecer la longitud del datagrama (si el paquete excede la longitud, se divide)
+          //Ahora vamos a crear un datagrama para recibir los datos que el cliente envie
+          DatagramPacket datagrama = new DatagramPacket(bufferEntrada, bufferEntrada.length);  //debemos pasar el buffer de entrada y su longitud
+          //El servidor va a estar esperando el mensaje del cliente
+          socket.receive(datagrama);
 
-public class servidor {
+          hiloCliente hilo = new hiloCliente(socket, datagrama); //pasamos el socket y datagrama para que sepa donde establecemos la conexion
+          hilo.start();
+      }
+    } catch (Exception e) { //para que tome todas las excepciones le borramos lo del socket
+      e.printStackTrace();
+    } 
 
-    public static void main(String[] args) {
-
-        // Puerto en el que escuchara el servidor
-        int puerto = 5000;
-
-        // Crear el socket UPD
-        try {
-
-            DatagramSocket socket = new DatagramSocket(puerto);
-            System.out.println("Servidor iniciado...");
-            
-
-            // Arreglo de bytes para recibir los datos
-            byte[] bufferEntrada = new byte[1024];
-
-            // Creamos el datagrama para recibir los datos
-            DatagramPacket paqueteEntrada = new DatagramPacket(bufferEntrada, bufferEntrada.length);
-
-            // Esprando recibir el mensaje del cliente
-            socket.receive(paqueteEntrada);
-
-            // Tenemos que enviar el socket y el datagrama para que sepa en donde se esta
-            // estableciendo la conexion
-            HiloCliente hilo = new HiloCliente(socket, paqueteEntrada);
-            hilo.start();
-
-            // Capturamos todas las excepciones que puedan ocurrir
-        } catch (Exception e) {
-
-            e.printStackTrace();
-        }
-
-    }
-
+  }
 }

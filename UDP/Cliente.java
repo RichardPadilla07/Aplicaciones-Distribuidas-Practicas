@@ -3,53 +3,47 @@ package UDP;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.Scanner;
 
 public class Cliente {
-
     public static void main(String[] args) {
-        // Puerto del servidor
-        int puertoServidor = 5000; // Aqui puede ser cualquier puerto que no este en uso
+        int puertoServidor = 4000;
 
-        // Crear el socket UPD
         try {
-            InetAddress ip_servidor = InetAddress.getByName("Localhost"); // Aqui va la IP del servidor
+            InetAddress ip_servidor = InetAddress.getByName("172.31.115.141");
             DatagramSocket socket = new DatagramSocket();
+            String respuesta = "";
 
-            /////// TODO ESTO ES PARA ENVIAR EL MENSAJE AL SERVIDOR ///////
-            // Mensaje de respuesta
-            String respuesta = "Hola, desde el servidor";
+            do {
+                // Obtener mensaje del usuario
+                Scanner scanner = new java.util.Scanner(System.in);
+                System.out.print("Mensaje para el servidor (escriba 'exit' para salir): ");
+                respuesta = scanner.nextLine();
 
-            // Arreglo de bytes para enviar datos
-            byte[] bufferSalida = respuesta.getBytes();
+                // Enviar mensaje al servidor
+                byte[] bufferSalida = respuesta.getBytes();
+                DatagramPacket paqueteSalida = new DatagramPacket(bufferSalida, bufferSalida.length, ip_servidor, puertoServidor);
+                socket.send(paqueteSalida);
 
-            // Enviar la respuesta al cliente
-            DatagramPacket paqueteSalida = new DatagramPacket(bufferSalida, bufferSalida.length, ip_servidor,
-                    puertoServidor);
+                // Si el usuario escribió exit, salimos
+                if (respuesta.equalsIgnoreCase("exit")) {
+                    System.out.println("Cerrando conexión...");
+                    socket.close();
+                    break;
+                }
 
-            // Enviar el datagrama de respuesta al cliente
-            socket.send(paqueteSalida);
+                // Recibir respuesta del servidor
+                byte[] bufferEntrada = new byte[1024];
+                DatagramPacket paqueteEntrada = new DatagramPacket(bufferEntrada, bufferEntrada.length);
+                socket.receive(paqueteEntrada);
 
-            /////// TODO ESTO ES PARA RECIBIR EL MENSAJE DEL SERVIDOR ///////
-            // Arreglo de bytes para recibir los datos
-            byte[] bufferEntrada = new byte[1024];
+                String mensaje = new String(paqueteEntrada.getData(), 0, paqueteEntrada.getLength());
+                System.out.println("Mensaje recibido: " + mensaje);
 
-            // Creamos el datagrama para recibir los datos
-            DatagramPacket paqueteEntrada = new DatagramPacket(bufferEntrada, bufferEntrada.length);
-
-            // Esprando recibir el mensaje del cliente
-            socket.receive(paqueteEntrada);
-
-            // Extraer informacion del datagrama recibido
-            String mensaje = new String(paqueteEntrada.getData(), 0, paqueteEntrada.getLength()); //
-            System.out.println("Mensaje recibido: " + mensaje);
-
-
-            // Cerramos el socket
-            socket.close();
+            } while (true);
 
         } catch (Exception e) {
+            e.printStackTrace();
         }
-
     }
-
 }
