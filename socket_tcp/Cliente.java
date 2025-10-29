@@ -19,7 +19,7 @@ public class Cliente {
             PrintWriter salida = new PrintWriter(socketCliente.getOutputStream(), true);
 
             while (true) {
-
+                
                 // Recibir mensajes
                 String datosRecibidos = entrada.readLine();
                 System.out.println(datosRecibidos);

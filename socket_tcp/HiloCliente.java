@@ -31,11 +31,12 @@ public class HiloCliente extends Thread {
                 // Recibir mensajes
                 String datosRecibidos = entrada.readLine();
                 System.out.println(datosRecibidos);
-
             }
 
-            // Preguntas
 
+
+
+            
         } catch (Exception e) {
             e.printStackTrace();
         }
