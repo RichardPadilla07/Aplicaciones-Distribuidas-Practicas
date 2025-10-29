@@ -44,7 +44,7 @@ public class HiloCliente extends Thread {
                 } else {
                     respuesta = "Incorrecto";
                 }
-                salida.println(respuesta + " \nCuanto es 5 * 6?"); // Pregunta 2
+                salida.println(respuesta + " \n" + "Cuanto es 5 * 6?"); // Pregunta 2
                 datosRecibidos = entrada.readLine();
                 System.out.println(datosRecibidos);
 
