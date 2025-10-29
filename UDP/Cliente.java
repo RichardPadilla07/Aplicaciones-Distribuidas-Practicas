@@ -10,7 +10,7 @@ public class Cliente {
         int puertoServidor = 4000;
 
         try {
-            InetAddress ip_servidor = InetAddress.getByName("172.31.115.141");
+            InetAddress ip_servidor = InetAddress.getByName("localhost");
             DatagramSocket socket = new DatagramSocket();
             String respuesta = "";
 
