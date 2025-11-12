@@ -1,0 +1,36 @@
+1.- docker pull mysql
+2.- docker pull httpd
+3.- docker pull nginx
+4,. docker pull phpmyadmin
+docker images (para ver las imágenes instaladas por medio de comando)
+
+Docker run httpd (para ejecutar el contenedor)
+
+	este es el puerto cualquiera : puerto de la aplicación
+Poner puerto: Docker run -p 5000:80 httpd
+
+httpd:
+Mappear puerto: Docker run -d -p 5000:80 httpd
+
+nginx:
+Mappear puerto: Docker run -d -p 5000:80 nginx
+
+phpmyadmin:
+Mappear puerto: Docker run -d -p 5000:80 phpmyadmin
+
+
+CMABIAR NOMBRES DEL CONTENEDORES
+HTTPD: docker run -d -p 5000:80 --name Apache httpd
+NGINX: docker run -d -p 5001:80 --name Nginx nginx
+PHPMYADMIN: docker run -d -p 5002:80 --name PHPAdmin
+
+ 
+
+
+CORRER LA IMAGEN:
+
+docker run -d -p 5003:5000 --name Python1 imagen1
+
+
+
+
