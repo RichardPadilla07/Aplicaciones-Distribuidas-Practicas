@@ -32,5 +32,7 @@ CORRER LA IMAGEN:
 docker run -d -p 5003:5000 --name Python1 imagen1
 
 
+				(Aqui es el nombre que le damos a la imagen)
 
+docker build -t             registro-rmi                     .
 
