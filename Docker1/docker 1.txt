@@ -36,3 +36,10 @@ docker run -d -p 5003:5000 --name Python1 imagen1
 
 docker build -t             registro-rmi                     .
 
+
+
+Ejecutar el contenedor del servidor:
+docker run -it --network host registro-rmi java ServidorRMI
+
+Ejecutar cliente en otra terminarl:
+docker run -it --network host registro-rmi java ClienteRMI
