@@ -1,0 +1,41 @@
+version: '3'
+
+services:
+  mysql_maestro1:
+    image: mysql:8.0
+    container_name: Maestro1_MySQL
+    ports:
+      - 3302:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Activo_DB
+    command: --server-id=1 --log-bin=mysql-bin --binlog-do-db=Activo_DB
+    volumes:
+      - mysql_maestro1_data:/var/lib/mysql
+
+  mysql_maestro2:
+    image: mysql:8.0
+    container_name: Maestro2_MySQL
+    ports:
+      - 3301:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: Activo_DB
+    command: --server-id=2 --log-bin=mysql-bin --binlog-do-db=Activo_DB
+    volumes:
+      - mysql_maestro2_data:/var/lib/mysql
+
+  phpmyadmin:
+    image: phpmyadmin:latest
+    container_name: phpMyAdmin
+    ports:
+      - 8080:80
+    depends_on:
+      - mysql_maestro1
+      - mysql_maestro2
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOSTS: Maestro1_MySQL,Maestro2_MySQL
+volumes:
+  mysql_maestro1_data:
+  mysql_maestro2_data:
