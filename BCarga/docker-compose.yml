@@ -1,0 +1,56 @@
+version: '3'
+
+services:
+  nginx:
+    container_name: Nginx567
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    ports:
+      - 8080:80
+    depends_on:
+      - servidor1
+      - servidor2
+      - servidor3
+      - servidor4
+      - servidor5
+
+  servidor1:
+    container_name: Servidor117
+    build:
+      context: ./servidor1
+      dockerfile: Dockerfile
+    ports:
+      - 50001:5000
+
+  servidor2:
+    container_name: Servidor217
+    build:
+      context: ./servidor2
+      dockerfile: Dockerfile
+    ports:
+      - 50002:5000
+
+  servidor3:
+    container_name: Servidor317
+    build:
+      context: ./servidor3
+      dockerfile: Dockerfile
+    ports:
+      - 50003:5000
+
+  servidor4:
+    container_name: Servidor417
+    build:
+      context: ./servidor4
+      dockerfile: Dockerfile
+    ports:
+      - 50004:5000
+
+  servidor5:
+    container_name: Servidor517
+    build:
+      context: ./servidor5
+      dockerfile: Dockerfile
+    ports:
+      - 50005:5000
